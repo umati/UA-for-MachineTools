@@ -41,4 +41,6 @@ Therefore the OPC UA Client reads the NamespaceArray in order to construct the c
 - Start
 - RequestJobResponseByJobOrderID
 
+### Implemented Methods on the Server:  
+
 ![server](images/server.PNG)  
