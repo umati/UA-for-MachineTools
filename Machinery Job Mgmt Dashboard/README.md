@@ -4,7 +4,7 @@
 
 ![Dashboard](images/Dashboard.PNG)  
 
-Dependencies:  
+## Dependencies:  
 
 - [Node-RED Version 3](https://nodered.org/blog/2022/07/14/version-3-0-released)
 - [Node.js](https://nodejs.org/en/)
@@ -12,14 +12,16 @@ Dependencies:
 - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
 - [node-red-node-ui-table](https://flows.nodered.org/node/node-red-node-ui-table)
 
-Client-Configuration:  
+## Client-Configuration:  
 
 ![Client-Configuration-1](images/Client-Configuration-1.PNG)  
 
 ![Client-Configuration-2](images/Client-Configuration-2.PNG)  
 
-Implementation:  
+## Implementation:  
 
 ![FLOW](images/flow.PNG)  
+
+### All NodeId's are Namespaceaware!
 
 ![methods](images/Methods.PNG)  
