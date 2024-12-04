@@ -4,7 +4,7 @@
 
 ![Dashboard](images/Dashboard.PNG)  
 
-This is an example Implementation for a JobManagement-Client using NodeRED and NodeRED Dashboard.  
+This is an example implementation for a "JobManagement-Client" using NodeRED Dashboard. It implements [OPC 40001-3: Machinery Job Mgmt](https://reference.opcfoundation.org/Machinery/Jobs/v100/docs/) from Client-Side in order to simulate a MES like control of a Machine which containes a [JobManagementType](https://reference.opcfoundation.org/Machinery/Jobs/v100/docs/8.1)!
 
 ## Dependencies:  
 
