@@ -15,6 +15,15 @@ It implements [OPC 40001-3: Machinery Job Mgmt](https://reference.opcfoundation.
 - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
 - [node-red-node-ui-table](https://flows.nodered.org/node/node-red-node-ui-table)
 
+## Installation:
+
+All dependencies are set and NodeRED is running!?  
+1. copy the content of `flow.json`  
+2. go into your NodeRED-Editor (e.g. "http://127.0.0.1:1880")
+3. press `ctrl + i`
+4. paste the content of `flow.json`   
+5. click on import  
+
 ## Client-Configuration:  
 
 ![Client-Configuration-1](images/Client-Configuration-1.PNG)  
