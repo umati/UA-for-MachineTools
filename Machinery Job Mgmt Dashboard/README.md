@@ -29,7 +29,16 @@ The whole namespace has some Permissions set, so in order to be able to call the
 ![FLOW](images/flow.PNG)   
 
 Due to some hardcoded parts of this Application it is ment to be used with the [SampleServer-node-opcua](https://github.com/AndreasHeine/SampleServer-node-opcua) @ opc.tcp://opcua.umati.app:4843  
-The implementation is are Namespaceaware!  
+The implementation is Namespaceaware!  
 Therefore the OPC UA Client reads the NamespaceArray in order to construct the correct NodeId's.  
 
 ![methods](images/Methods.PNG)  
+
+### Implemented Methods on the Dashboard:  
+- Store
+- StoreAndStart
+- Clear
+- Start
+- RequestJobResponseByJobOrderID
+
+![server](images/server.PNG)  
