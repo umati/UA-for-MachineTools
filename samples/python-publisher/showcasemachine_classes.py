@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+#SPDX-License-Identifier: MIT
 from pydantic import BaseModel, Field
 from typing import Optional, Any
 
