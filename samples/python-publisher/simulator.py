@@ -26,7 +26,7 @@ import showcasemachine_classes as smc
 load_dotenv()
 
 MQTT_HOST = os.getenv("MQTT_HOST", "fe02umati.isw.uni-stuttgart.de")
-MQTT_PORT = int(os.getenv("MQTT_PORT"))
+MQTT_PORT = int(os.getenv("MQTT_PORT", 443))
 PUBLISH_INTERVAL = float(os.getenv("SIM_INTERVAL", 2.0))  # seconds between updates
 # Seconds between (re-)publishing metadata messages. Set to 0 to publish only once at startup.
 METADATA_INTERVAL = float(os.getenv("METADATA_INTERVAL", 60.0))
@@ -51,15 +51,74 @@ def to_pascal_case(snake_str):
     return "".join(word.capitalize() for word in snake_str.split("_"))
 
 
+# OPC UA Built-In Type IDs for each field (from verbose reference messages)
+# 1=Boolean, 5=UInt16, 6=Int32, 7=UInt32, 11=Double, 12=String,
+# 17=QualifiedName, 21=LocalizedText, 22=ExtensionObject
+FIELD_UA_TYPES = {
+    # Identification
+    "SerialNumber": 12, "ProductInstanceUri": 12, "ProductCode": 12,
+    "SoftwareRevision": 12, "DeviceClass": 12, "Location": 12,
+    "Manufacturer": 21, "Model": 21,  # LocalizedText
+    "YearOfConstruction": 5,
+    # Monitoring/Spindle
+    "IsRotating": 1, "Override": 11, "IsUsedAsAxis": 1,
+    # Monitoring/Channel 1
+    "ChannelState": 6, "FeedOverride": 11, "ChannelMode": 6,
+    # Monitoring/MachineTool
+    "OperationMode": 6, "PowerOnDuration": 7,
+    # Monitoring/Stacklight
+    "StacklightMode": 6, "NodeVersion": 12,
+    # Monitoring/Stacklight/Light N
+    "NumberInList": 5, "IsPartOfBase": 1,
+    "SignalOn": 1, "SignalMode": 6, "SignalColor": 6,
+    # Equipment/Tools/Tool1
+    "Locked": 1, "ControlIdentifierInterpretation": 6,
+    "ControlIdentifier1": 7, "ReasonForLocking": 6,
+    # Production/ActiveProgram/State
+    "CurrentState": 21,  # LocalizedText
+    # Production/ActiveProgram/State/CurrentState
+    "Number": 7, "Id": 17,
+    # Common
+    "Name": 12, "virtualId": 12,
+}
+
+
+def wrap_verbose_value(key, value):
+    """Wrap a value in the verbose {"UaType": N, "Value": ...} format.
+
+    LocalizedText (UaType 21) values get an extra {"Text": ...} wrapper.
+    Falls back to a basic Python-type heuristic if the field is not in FIELD_UA_TYPES.
+    """
+    ua_type = FIELD_UA_TYPES.get(key)
+    if ua_type is None:
+        # Fallback: infer from Python type
+        if isinstance(value, bool):
+            ua_type = 1
+        elif isinstance(value, int):
+            ua_type = 6
+        elif isinstance(value, float):
+            ua_type = 11
+        elif isinstance(value, str):
+            ua_type = 12
+        else:
+            ua_type = 12  # default to String
+
+    if ua_type == 21:  # LocalizedText
+        return {"UaType": ua_type, "Value": {"Text": value}}
+    else:
+        return {"UaType": ua_type, "Value": value}
+
+
 def model_to_pascal_payload(model):
     """Dump a Pydantic model to a dict with PascalCase keys (flat, no nesting).
     
     Only includes scalar fields (skips sub-models) and non-None values.
     This mirrors how OPC UA data messages carry only the leaf values
     for a given topic, not the full tree.
+    Values are wrapped in the verbose {"UaType": N, "Value": ...} format.
     """
     payload = {}
-    for field_name, field_info in model.model_fields.items():
+    for field_name, field_info in type(model).model_fields.items():
         value = getattr(model, field_name)
         if value is None:
             continue
@@ -71,9 +130,10 @@ def model_to_pascal_payload(model):
             continue
         # Convert key to PascalCase, except virtualId stays as-is
         if field_name == "virtual_id":
-            payload["virtualId"] = value
+            key = "virtualId"
         else:
-            payload[to_pascal_case(field_name)] = value
+            key = to_pascal_case(field_name)
+        payload[key] = wrap_verbose_value(key, value)
     return payload
 
 
@@ -123,7 +183,7 @@ TOPIC_MAP = {
 
 def replace_machine_ids(model):
     """Replace the default machine name in virtual IDs throughout the model."""
-    for field_name in model.model_fields:
+    for field_name in type(model).model_fields:
         value = getattr(model, field_name)
         if isinstance(value, smc.BaseModel):
             replace_machine_ids(value)
@@ -164,18 +224,18 @@ def publish_data(client, attr_path, model):
 # ─────────────────────────────────────────────────────────
 
 def publish_all_metadata(client):
-    """Read all metadata JSON files from data/ and publish them as retained messages."""
-    metadata_files = glob.glob("data/metadata_*.json")
+    """Read all metadata JSON files from verbose_messages/metadata/ and publish them as retained messages."""
+    metadata_files = glob.glob("verbose_messages/metadata/metadata_*.json")
     count = 0
     for filepath in sorted(metadata_files):
         with open(filepath, "r") as f:
             data = json.load(f)
         topic = data["topic"]
         topic = topic.replace("ShowcaseMachineTool", MACHINE_NAME)
-        topic = topic.replace("vdw", COMPANY_ID)
+        topic = topic.replace("verbose", COMPANY_ID)
         topic = topic.replace("server-cpp-dev", PUBLISHER_ID)
         topic = topic.replace("opcua/umati/v3/json", TOPIC_PREFIX)
-        print(f"Publing to {topic}")
+        print(f"Publishing to {topic}")
         payload = data["payload"]
         payload = replace_strings_in_payload(payload)
         client.publish(topic, json.dumps(payload), retain=True)

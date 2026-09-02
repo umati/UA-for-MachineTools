@@ -1,0 +1,26 @@
+{
+    "topic": "opcua/umati/v3/json/data/verbose/server-cpp-dev/ShowcaseMachineTool/Monitoring/Stacklight",
+    "payload": {
+        "MessageId": "890964b1-2c42-4e55-8858-6b720ab2b99d",
+        "MessageType": "ua-data",
+        "PublisherId": "1",
+        "Messages": [
+            {
+                "Payload": {
+                    "StacklightMode": {
+                        "UaType": 6,
+                        "Value": 0
+                    },
+                    "NodeVersion": {
+                        "UaType": 12,
+                        "Value": ""
+                    },
+                    "virtualId": {
+                        "UaType": 12,
+                        "Value": "17:ShowcaseMachineTool.5:Monitoring.5:Stacklight"
+                    }
+                }
+            }
+        ]
+    }
+}

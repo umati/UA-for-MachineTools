@@ -1,0 +1,412 @@
+{
+    "topic": "opcua/umati/v3/json/metadata/verbose/server-cpp-dev/ShowcaseMachineTool/Monitoring/Channel 1",
+    "payload": {
+        "MessageId": "6f10ae00-5f26-420e-b503-4d92ef19bb04",
+        "MessageType": "ua-metadata",
+        "PublisherId": "1",
+        "DataSetWriterId": 13,
+        "MetaData": {
+            "Namespaces": [
+                "http://opcfoundation.org/UA/",
+                "urn:UmatiSampleServer",
+                "http://opcfoundation.org/UA/DI/",
+                "http://opcfoundation.org/UA/Machinery/",
+                "http://opcfoundation.org/UA/IA/",
+                "http://opcfoundation.org/UA/MachineTool/",
+                "http://opcfoundation.org/UA/Woodworking/",
+                "http://opcfoundation.org/UA/Machinery/Result/",
+                "http://opcfoundation.org/UA/GMS/",
+                "http://opcfoundation.org/UA/Dictionary/IRDI",
+                "http://opcfoundation.org/UA/PADIM/",
+                "http://opcfoundation.org/UA/Machinery/ProcessValues/",
+                "http://opcfoundation.org/UA/AdditiveManufacturing/NodeSet2/",
+                "http://example.com/FullMachineTool/",
+                "http://example.com/FullMachineToolDynamic/",
+                "http://example.com/BasicMachineTool/",
+                "http://example.com/MRMachineTool/",
+                "http://example.com/ShowcaseMachineTool/",
+                "http://example.com/CNShowcaseMachineTool/",
+                "http://example.com/BasicWoodworking/",
+                "http://example.com/FullWoodworking/",
+                "http://www.isw.uni-stuttgart.de/BasicGMS/",
+                "https://www.hexagonmi.com/Hexagon PMM Gold/",
+                "https://www.hexagonmi.com/Hexagon GLOBAL S/",
+                "http://www.ogpgmbh.de/SmartScope CNC 500/",
+                "http://www.wenzel-group.com/Wenzel LH 87/",
+                "http://www.3yourmind.com/BasicAMMachine/",
+                "http://www.3yourmind.com/ShowcaseAMMachine/"
+            ],
+            "EnumDataTypes": [
+                {
+                    "DataTypeId": {
+                        "Id": 64,
+                        "Namespace": 5
+                    },
+                    "Name": {
+                        "Name": "ChannelState",
+                        "Uri": 5
+                    },
+                    "EnumDefinition": {
+                        "Fields": [
+                            {
+                                "Value": "0",
+                                "Description": {
+                                    "Text": "There is an active command being executed by the NC channel.",
+                                    "Locale": "en"
+                                },
+                                "Name": "Active"
+                            },
+                            {
+                                "Value": "1",
+                                "Description": {
+                                    "Text": "The NC execution is interrupted. Execution of a program in the channel can be restarted.",
+                                    "Locale": "en"
+                                },
+                                "Name": "Interrupted"
+                            },
+                            {
+                                "Value": "2",
+                                "Description": {
+                                    "Text": "No NC command is active in the NC channel. E.g. channel is idle.",
+                                    "Locale": "en"
+                                },
+                                "Name": "Reset"
+                            }
+                        ]
+                    },
+                    "BuiltInType": 0
+                },
+                {
+                    "DataTypeId": {
+                        "Id": 67,
+                        "Namespace": 5
+                    },
+                    "Name": {
+                        "Name": "ChannelMode",
+                        "Uri": 5
+                    },
+                    "EnumDefinition": {
+                        "Fields": [
+                            {
+                                "Value": "0",
+                                "Description": {
+                                    "Text": "NC channel mode Automatic \u2013 execute CNC part programs.",
+                                    "Locale": "en"
+                                },
+                                "Name": "Automatic"
+                            },
+                            {
+                                "Value": "1",
+                                "Description": {
+                                    "Text": "NC channel mode Mda/Mdi \u2013 manual data input and execution.",
+                                    "Locale": "en"
+                                },
+                                "Name": "MdaMdi"
+                            },
+                            {
+                                "Value": "2",
+                                "Description": {
+                                    "Text": "NC channel mode Jog Manual \u2013 axis movement triggered by user.",
+                                    "Locale": "en"
+                                },
+                                "Name": "JogManual"
+                            },
+                            {
+                                "Value": "3",
+                                "Description": {
+                                    "Text": "NC channel mode Jog Increment \u2013 incremental axis movement triggered by user.",
+                                    "Locale": "en"
+                                },
+                                "Name": "JogIncrement"
+                            },
+                            {
+                                "Value": "4",
+                                "Description": {
+                                    "Text": "NC channel mode Teaching Handle \u2013 teaching a machine tool by moving axes of the machine tool by hand.",
+                                    "Locale": "en"
+                                },
+                                "Name": "TeachingHandle"
+                            },
+                            {
+                                "Value": "5",
+                                "Description": {
+                                    "Text": "NC channel mode Remote \u2013 the machine tool can receive CNC files via a remote access mechanism.",
+                                    "Locale": "en"
+                                },
+                                "Name": "Remote"
+                            },
+                            {
+                                "Value": "6",
+                                "Description": {
+                                    "Text": "NC channel mode Reference \u2013 The machine tool returns to its reference point/ zero position.",
+                                    "Locale": "en"
+                                },
+                                "Name": "Reference"
+                            },
+                            {
+                                "Value": "7",
+                                "Description": {
+                                    "Text": "NC channel mode is different from the values defined in this enumeration.",
+                                    "Locale": "en"
+                                },
+                                "Name": "Other"
+                            }
+                        ]
+                    },
+                    "BuiltInType": 0
+                }
+            ],
+            "Name": "ns=17;i=59040",
+            "Fields": [
+                {
+                    "Name": "ChannelState",
+                    "FieldFlags": 0,
+                    "BuiltInType": 29,
+                    "DataType": {
+                        "Id": 64,
+                        "Namespace": 5
+                    },
+                    "ValueRank": -2,
+                    "MaxStringLength": 0,
+                    "DataSetFieldId": "03947eb0-039e-44c9-87d5-c83d7300a6cc"
+                },
+                {
+                    "Name": "FeedOverride",
+                    "FieldFlags": 0,
+                    "BuiltInType": 11,
+                    "DataType": {
+                        "Id": 11
+                    },
+                    "ValueRank": -2,
+                    "MaxStringLength": 0,
+                    "DataSetFieldId": "63e09c07-8c25-4c7c-b12c-9aba5406fec8"
+                },
+                {
+                    "Name": "ChannelMode",
+                    "FieldFlags": 0,
+                    "BuiltInType": 29,
+                    "DataType": {
+                        "Id": 67,
+                        "Namespace": 5
+                    },
+                    "ValueRank": -2,
+                    "MaxStringLength": 0,
+                    "DataSetFieldId": "fde71509-dca8-4423-aaa5-3b86f4693b82"
+                },
+                {
+                    "Name": "Name",
+                    "FieldFlags": 0,
+                    "BuiltInType": 12,
+                    "DataType": {
+                        "Id": 12
+                    },
+                    "ValueRank": -2,
+                    "MaxStringLength": 0,
+                    "DataSetFieldId": "130b1047-9dda-450e-94e3-7dad7c0f1974"
+                },
+                {
+                    "Name": "virtualId",
+                    "Description": {
+                        "Text": "VirtualId used by the Gateway"
+                    },
+                    "FieldFlags": 0,
+                    "BuiltInType": 12,
+                    "DataType": {
+                        "Id": 12
+                    },
+                    "ValueRank": -1,
+                    "MaxStringLength": 0,
+                    "DataSetFieldId": "8801b012-f4a8-45fd-b8e2-85a9e58ff51c",
+                    "Properties": [
+                        {
+                            "Key": {
+                                "Name": "relations"
+                            },
+                            "Value": {
+                                "Type": 24,
+                                "Body": [
+                                    {
+                                        "Type": 22,
+                                        "Body": {
+                                            "TypeId": {
+                                                "Id": 518
+                                            },
+                                            "Body": {
+                                                "ReferenceTypeId": {
+                                                    "Id": 46
+                                                },
+                                                "IsForward": true,
+                                                "NodeId": {
+                                                    "Id": 59046,
+                                                    "Namespace": 17
+                                                },
+                                                "BrowseName": {
+                                                    "Name": "Name",
+                                                    "Uri": 5
+                                                },
+                                                "DisplayName": {
+                                                    "Text": "Name"
+                                                },
+                                                "NodeClass": 2,
+                                                "TypeDefinition": {
+                                                    "Id": 68
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Type": 22,
+                                        "Body": {
+                                            "TypeId": {
+                                                "Id": 518
+                                            },
+                                            "Body": {
+                                                "ReferenceTypeId": {
+                                                    "Id": 47
+                                                },
+                                                "IsForward": true,
+                                                "NodeId": {
+                                                    "Id": 59041,
+                                                    "Namespace": 17
+                                                },
+                                                "BrowseName": {
+                                                    "Name": "ChannelState",
+                                                    "Uri": 5
+                                                },
+                                                "DisplayName": {
+                                                    "Text": "ChannelState"
+                                                },
+                                                "NodeClass": 2,
+                                                "TypeDefinition": {
+                                                    "Id": 63
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Type": 22,
+                                        "Body": {
+                                            "TypeId": {
+                                                "Id": 518
+                                            },
+                                            "Body": {
+                                                "ReferenceTypeId": {
+                                                    "Id": 47
+                                                },
+                                                "IsForward": true,
+                                                "NodeId": {
+                                                    "Id": 59042,
+                                                    "Namespace": 17
+                                                },
+                                                "BrowseName": {
+                                                    "Name": "FeedOverride",
+                                                    "Uri": 5
+                                                },
+                                                "DisplayName": {
+                                                    "Text": "FeedOverride"
+                                                },
+                                                "NodeClass": 2,
+                                                "TypeDefinition": {
+                                                    "Id": 17570
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Type": 22,
+                                        "Body": {
+                                            "TypeId": {
+                                                "Id": 518
+                                            },
+                                            "Body": {
+                                                "ReferenceTypeId": {
+                                                    "Id": 47
+                                                },
+                                                "IsForward": true,
+                                                "NodeId": {
+                                                    "Id": 59045,
+                                                    "Namespace": 17
+                                                },
+                                                "BrowseName": {
+                                                    "Name": "ChannelMode",
+                                                    "Uri": 5
+                                                },
+                                                "DisplayName": {
+                                                    "Text": "ChannelMode"
+                                                },
+                                                "NodeClass": 2,
+                                                "TypeDefinition": {
+                                                    "Id": 63
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Type": 22,
+                                        "Body": {
+                                            "TypeId": {
+                                                "Id": 518
+                                            },
+                                            "Body": {
+                                                "ReferenceTypeId": {
+                                                    "Id": 47
+                                                },
+                                                "IsForward": false,
+                                                "NodeId": {
+                                                    "Id": 59004,
+                                                    "Namespace": 17
+                                                },
+                                                "BrowseName": {
+                                                    "Name": "Monitoring",
+                                                    "Uri": 5
+                                                },
+                                                "DisplayName": {
+                                                    "Text": "Monitoring"
+                                                },
+                                                "NodeClass": 1,
+                                                "TypeDefinition": {
+                                                    "Id": 14,
+                                                    "Namespace": 5
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Type": 22,
+                                        "Body": {
+                                            "TypeId": {
+                                                "Id": 518
+                                            },
+                                            "Body": {
+                                                "ReferenceTypeId": {
+                                                    "Id": 40
+                                                },
+                                                "IsForward": true,
+                                                "NodeId": {
+                                                    "Id": 16,
+                                                    "Namespace": 5
+                                                },
+                                                "BrowseName": {
+                                                    "Name": "ChannelMonitoringType",
+                                                    "Uri": 5
+                                                },
+                                                "DisplayName": {
+                                                    "Text": "ChannelMonitoringType"
+                                                },
+                                                "NodeClass": 8
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ConfigurationVersion": {
+                "MajorVersion": 1,
+                "MinorVersion": 0
+            }
+        }
+    }
+}

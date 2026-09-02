@@ -57,20 +57,20 @@ are fields, child objects are sub-models. This file is the Python equivalent
 of the instance NodeSet.
 
 
-### `data/` — Metadata and Sample Data Files
+### `verbose_messages/` — Metadata and Sample Data Files
 
 Contains two sets of JSON files captured from a reference OPC UA server:
 
-| File pattern | Used by | Purpose |
+| Directory / File pattern | Used by | Purpose |
 |---|---|---|
-| `metadata_*.json` | `simulator.py` | **Actively loaded and published** as retained MQTT messages (Phase 1) |
-| `data_*.json` | - | Reference samples showing what data messages look like; not loaded by any component |
+| `verbose_messages/metadata/metadata_*.json` | `simulator.py` | **Actively loaded and published** as retained MQTT messages (Phase 1) |
+| `verbose_messages/data/data_*.json` | `collector.py` (save mode) | Reference samples showing what data messages look like, and default output directory for collector |
 
 Each file stores the MQTT topic and the JSON payload together:
 
 ```json
 {
-    "topic": "opcua/umati/v3/json/metadata/vdw/server-cpp-dev/ShowcaseMachineTool/Monitoring/Spindle",
+    "topic": "opcua/umati/v3/json/metadata/verbose/server-cpp-dev/ShowcaseMachineTool/Monitoring/Spindle",
     "payload": { "MessageType": "ua-metadata", "MetaData": { "Fields": [...] }, ... }
 }
 ```
@@ -171,7 +171,10 @@ Requires Python ≥ 3.8.
 ```bash
 python -m venv venv
 source venv/bin/activate
+# On Linux
 pip install -r requirements.txt
+# On Windows
+python -m pip install -r requirements.txt
 ```
 
 Start the publisher:
@@ -179,5 +182,6 @@ Start the publisher:
 ```bash
 python simulator.py
 ```
+
 
 The simulator publishes changing values every `SIM_INTERVAL` seconds.
