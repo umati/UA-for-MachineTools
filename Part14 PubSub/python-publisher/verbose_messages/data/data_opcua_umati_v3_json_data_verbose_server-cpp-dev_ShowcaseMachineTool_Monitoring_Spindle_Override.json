@@ -1,0 +1,41 @@
+{
+    "topic": "opcua/umati/v3/json/data/verbose/server-cpp-dev/ShowcaseMachineTool/Monitoring/Spindle/Override",
+    "payload": {
+        "MessageId": "26f51ca6-2f40-4c86-90ce-b7fd2c25fd53",
+        "MessageType": "ua-data",
+        "PublisherId": "1",
+        "Messages": [
+            {
+                "Payload": {
+                    "EngineeringUnits": {
+                        "UaType": 22,
+                        "Value": {
+                            "UaTypeId": {
+                                "Id": 887
+                            },
+                            "NamespaceUri": "",
+                            "UnitId": 0,
+                            "DisplayName": {
+                                "Text": "%"
+                            }
+                        }
+                    },
+                    "EURange": {
+                        "UaType": 22,
+                        "Value": {
+                            "UaTypeId": {
+                                "Id": 884
+                            },
+                            "Low": 0,
+                            "High": 125
+                        }
+                    },
+                    "virtualId": {
+                        "UaType": 12,
+                        "Value": "17:ShowcaseMachineTool.5:Monitoring.17:Spindle.5:Override"
+                    }
+                }
+            }
+        ]
+    }
+}

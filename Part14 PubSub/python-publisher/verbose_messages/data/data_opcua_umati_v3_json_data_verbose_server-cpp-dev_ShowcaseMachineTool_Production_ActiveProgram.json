@@ -1,0 +1,26 @@
+{
+    "topic": "opcua/umati/v3/json/data/verbose/server-cpp-dev/ShowcaseMachineTool/Production/ActiveProgram",
+    "payload": {
+        "MessageId": "9f1b324a-bace-49cc-adc6-8a34804a7971",
+        "MessageType": "ua-data",
+        "PublisherId": "1",
+        "Messages": [
+            {
+                "Payload": {
+                    "NumberInList": {
+                        "UaType": 5,
+                        "Value": 0
+                    },
+                    "Name": {
+                        "UaType": 12,
+                        "Value": "Basic Program"
+                    },
+                    "virtualId": {
+                        "UaType": 12,
+                        "Value": "17:ShowcaseMachineTool.5:Production.5:ActiveProgram"
+                    }
+                }
+            }
+        ]
+    }
+}

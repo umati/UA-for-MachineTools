@@ -1,0 +1,34 @@
+{
+    "topic": "opcua/umati/v3/json/data/verbose/server-cpp-dev/ShowcaseMachineTool/Monitoring/Channel 1",
+    "payload": {
+        "MessageId": "44f46c20-672e-44e4-ac2e-3872530feb16",
+        "MessageType": "ua-data",
+        "PublisherId": "1",
+        "Messages": [
+            {
+                "Payload": {
+                    "ChannelState": {
+                        "UaType": 6,
+                        "Value": 1
+                    },
+                    "FeedOverride": {
+                        "UaType": 11,
+                        "Value": 75.40000000037253
+                    },
+                    "ChannelMode": {
+                        "UaType": 6,
+                        "Value": 0
+                    },
+                    "Name": {
+                        "UaType": 12,
+                        "Value": "Channel 1"
+                    },
+                    "virtualId": {
+                        "UaType": 12,
+                        "Value": "17:ShowcaseMachineTool.5:Monitoring.17:Channel 1"
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "topic": "opcua/umati/v3/json/data/verbose/server-cpp-dev/ShowcaseMachineTool/Equipment/Tools/Tool1/Locked",
+    "payload": {
+        "MessageId": "ebb34cbf-60dd-4eb8-8722-e3bd6cd01f76",
+        "MessageType": "ua-data",
+        "PublisherId": "1",
+        "Messages": [
+            {
+                "Payload": {
+                    "ReasonForLocking": {
+                        "UaType": 6,
+                        "Value": 5
+                    },
+                    "virtualId": {
+                        "UaType": 12,
+                        "Value": "17:ShowcaseMachineTool.5:Equipment.5:Tools.17:Tool1.5:Locked"
+                    }
+                }
+            }
+        ]
+    }
+}
