@@ -34,7 +34,7 @@ Companion Spec NodeSet  +  Instance NodeSet
 
 The main component. It runs in three phases:
 
-1. **Publish metadata** - reads `data/metadata_*.json` files and publishes them
+1. **Publish metadata** - reads `verbose_messages/metadata/metadata_*.json` files and publishes them
    as **retained** MQTT messages on `…/metadata/…` topics. This tells
    subscribers what fields exist and what data types they have.
 2. **Initialize machine** - creates a nested `ShowcaseMachineTool` Pydantic
@@ -64,7 +64,7 @@ Contains two sets of JSON files captured from a reference OPC UA server:
 | Directory / File pattern | Used by | Purpose |
 |---|---|---|
 | `verbose_messages/metadata/metadata_*.json` | `simulator.py` | **Actively loaded and published** as retained MQTT messages (Phase 1) |
-| `verbose_messages/data/data_*.json` | `collector.py` (save mode) | Reference samples showing what data messages look like, and default output directory for collector |
+| `verbose_messages/data/data_*.json` | - | Reference samples showing what data messages look like; not loaded by any component |
 
 Each file stores the MQTT topic and the JSON payload together:
 
@@ -144,25 +144,26 @@ child objects are published on their own sub-topics.
 
 Copy `.env.example` to `.env` and fill in your values:
 
-```env
-# MQTT Broker
-MQTT_HOST=fe02umati.isw.uni-stuttgart.de
-MQTT_PORT=443
+~~~env
+# ── MQTT Broker ──────────────────────────────────────────
+MQTT_HOST=your-mqtt-host
+MQTT_PORT=your-mqtt-port
 MQTT_USER=your-username
 MQTT_PASSWORD=your-password
 
-# Machine identity
-MACHINE_NAME=SvenShowcaseMachineTool
-MACHINE_LOCATION=VIRTUAL 2 1/N 48.1351 E 11.5820
+# ── Machine identity ────────────────────────────────────
+MACHINE_NAME=your-machine-name
+MACHINE_LOCATION=VIRTUAL 2 1/N 48.1351 E 11.5820 #(Munich, Germany)
 
-# Simulator settings
+# ── Simulator settings ──────────────────────────────────
 SIM_INTERVAL=2
 METADATA_INTERVAL=60
 
-# Topic layout
+# ── Topic layout ────────────────────────────────────────
 TOPIC_PREFIX=opcua/umati/v3/json
 COMPANY_ID=vdw
 PUBLISHER_ID=simulator-001
+~~~
 
 ## Running
 

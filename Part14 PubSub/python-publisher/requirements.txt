@@ -3,7 +3,6 @@ argcomplete==3.7.0
 black==26.5.1
 click==8.4.2
 datamodel-code-generator==0.71.0
-dotenv==0.9.9
 genson==1.4.0
 inflect==7.5.0
 isort==8.0.1

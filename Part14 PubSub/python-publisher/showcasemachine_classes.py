@@ -10,12 +10,10 @@ from typing import Optional, Any
 class CurrentState(BaseModel):
     """Production/ActiveProgram/State/CurrentState
     Fields: Number, Id, virtualId
-    Note: This is a leaf sub-topic. The parent State class has
-    current_state as a scalar (str). This sub-topic's data flows
-    through the data_store fallback in collector.py.
+    Note: This is a leaf sub-topic under State.
     """
     number: Optional[int] = None
-    id: Optional[str] = None
+    id: Optional[dict[str, Any]] = None
     virtual_id: Optional[str] = None
 
 
@@ -75,8 +73,7 @@ class Spindle(BaseModel):
     """Monitoring/Spindle
     Fields: IsRotating, Override, IsUsedAsAxis, Name, virtualId
     Note: Override is also a leaf sub-topic with its own fields
-    (EngineeringUnits, EURange, virtualId). That sub-topic's data
-    flows through the data_store fallback.
+    (EngineeringUnits, EURange, virtualId).
     """
     is_rotating: Optional[bool] = None
     override: Optional[float] = None
@@ -89,8 +86,7 @@ class Channel1(BaseModel):
     """Monitoring/Channel 1
     Fields: ChannelState, FeedOverride, ChannelMode, Name, virtualId
     Note: FeedOverride is also a leaf sub-topic with its own fields
-    (EURange, EngineeringUnits, virtualId). That sub-topic's data
-    flows through the data_store fallback.
+    (EURange, EngineeringUnits, virtualId).
     """
     channel_state: Optional[int] = None
     feed_override: Optional[float] = None
@@ -103,8 +99,7 @@ class Tool1(BaseModel):
     """Equipment/Tools/Tool1
     Fields: Locked, ControlIdentifierInterpretation, ControlIdentifier1, Name, virtualId
     Note: Locked is also a leaf sub-topic with its own fields
-    (ReasonForLocking, virtualId). That sub-topic's data flows
-    through the data_store fallback.
+    (ReasonForLocking, virtualId).
     """
     locked: Optional[bool] = None
     control_identifier_interpretation: Optional[int] = None

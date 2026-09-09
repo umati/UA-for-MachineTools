@@ -7,7 +7,7 @@ Publishes OPC UA Pub/Sub messages over MQTT to simulate a machine tool.
 Uses the Pydantic classes from showcasemachine_classes.py as the data model.
 
 Steps:
-  1. Publishes all metadata messages from data/ (one-time, retained)
+  1. Publishes all metadata messages from verbose_messages/metadata/ (one-time, retained)
   2. Fills the machine model with realistic initial values
   3. Runs a simulation loop that mutates values and publishes data messages
 """
@@ -36,7 +36,7 @@ MACHINE_NAME = os.getenv("MACHINE_NAME", "SvenShowcaseMachineTool")
 MACHINE_LOCATION = os.getenv(
     "MACHINE_LOCATION", "VIRTUAL 2 1/N 48.1351 E 11.5820"
 )
-# The base topic prefix — must match what the collector subscribes to
+# The base topic prefix
 TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "opcua/umati/v3/json")
 COMPANY_ID = os.getenv("COMPANY_ID", "vdw")
 PUBLISHER_ID = os.getenv("PUBLISHER_ID", "simulator-001")
@@ -86,7 +86,8 @@ FIELD_UA_TYPES = {
 def wrap_verbose_value(key, value):
     """Wrap a value in the verbose {"UaType": N, "Value": ...} format.
 
-    LocalizedText (UaType 21) values get an extra {"Text": ...} wrapper.
+    LocalizedText (UaType 21) values get a {"Text": ..., "Locale": "en"} wrapper
+    unless already provided as a dict.
     Falls back to a basic Python-type heuristic if the field is not in FIELD_UA_TYPES.
     """
     ua_type = FIELD_UA_TYPES.get(key)
@@ -100,11 +101,16 @@ def wrap_verbose_value(key, value):
             ua_type = 11
         elif isinstance(value, str):
             ua_type = 12
+        elif isinstance(value, dict):
+            ua_type = 22  # ExtensionObject / complex structure
         else:
             ua_type = 12  # default to String
 
+    if isinstance(value, dict):
+        return {"UaType": ua_type, "Value": value}
+
     if ua_type == 21:  # LocalizedText
-        return {"UaType": ua_type, "Value": {"Text": value}}
+        return {"UaType": ua_type, "Value": {"Text": value, "Locale": "en"}}
     else:
         return {"UaType": ua_type, "Value": value}
 
@@ -225,7 +231,9 @@ def publish_data(client, attr_path, model):
 
 def publish_all_metadata(client):
     """Read all metadata JSON files from verbose_messages/metadata/ and publish them as retained messages."""
-    metadata_files = glob.glob("verbose_messages/metadata/metadata_*.json")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    metadata_dir = os.path.join(base_dir, "verbose_messages", "metadata")
+    metadata_files = glob.glob(os.path.join(metadata_dir, "metadata_*.json"))
     count = 0
     for filepath in sorted(metadata_files):
         with open(filepath, "r") as f:
@@ -289,17 +297,17 @@ def create_initial_machine():
                 light_0=smc.StacklightElement(
                     number_in_list=0, is_part_of_base=True,
                     signal_on=True, signal_mode=0, signal_color=3,  # Green
-                    virtual_id="17:ShowcaseMachineTool.5:Monitoring.5:Stacklight.5:Light 0",
+                    virtual_id="17:ShowcaseMachineTool.5:Monitoring.5:Stacklight.17:Light 0",
                 ),
                 light_1=smc.StacklightElement(
                     number_in_list=1, is_part_of_base=True,
                     signal_on=False, signal_mode=0, signal_color=4,  # Yellow
-                    virtual_id="17:ShowcaseMachineTool.5:Monitoring.5:Stacklight.5:Light 1",
+                    virtual_id="17:ShowcaseMachineTool.5:Monitoring.5:Stacklight.17:Light 1",
                 ),
                 light_2=smc.StacklightElement(
                     number_in_list=2, is_part_of_base=True,
                     signal_on=False, signal_mode=0, signal_color=1,  # Red
-                    virtual_id="17:ShowcaseMachineTool.5:Monitoring.5:Stacklight.5:Light 2",
+                    virtual_id="17:ShowcaseMachineTool.5:Monitoring.5:Stacklight.17:Light 2",
                 ),
             ),
             channel_1=smc.Channel1(
@@ -352,12 +360,12 @@ def simulate_tick(machine, tick):
     m = machine.monitoring
 
     # Spindle override oscillates between 85-115% with some noise
-    m.spindle.override = round(50 + 15 * math.sin(tick * 0.1) + random.uniform(-2, 2), 1)
+    m.spindle.override = round(100 + 15 * math.sin(tick * 0.1) + random.uniform(-2, 2), 1)
     m.spindle.is_rotating = True
     changed.append(("monitoring/spindle", m.spindle))
 
     # Feed override drifts around 100%
-    m.channel_1.feed_override = round(50 + 10 * math.cos(tick * 0.08) + random.uniform(-1, 1), 1)
+    m.channel_1.feed_override = round(100 + 10 * math.cos(tick * 0.08) + random.uniform(-1, 1), 1)
     changed.append(("monitoring/channel_1", m.channel_1))
 
     # Power on duration increments every tick
