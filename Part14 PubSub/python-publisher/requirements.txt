@@ -2,7 +2,7 @@ annotated-types==0.8.0
 argcomplete==3.7.0
 black==26.5.1
 click==8.4.2
-datamodel-code-generator==0.71.0
+datamodel-code-generator==0.81.0
 genson==1.4.0
 inflect==7.5.0
 isort==8.0.1
